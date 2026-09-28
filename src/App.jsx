@@ -57,14 +57,15 @@ const App = () => {
     "Training & Talent Solutions"
   ];
 
+  // ALL LOGOS SET TO TEXT-ONLY FOR CLEAN CONSISTENCY
   const clientLogos = [
-    { name: "ProxieStudios", src: "image_e24c83.png" },
-    { name: "Source Rock Ltd", src: "image_e22eb5.png" },
-    { name: "EmpaVita Group", src: "image_e23313.png" },
-    { name: "Valderus", src: "image_e2329a.png" },
+    { name: "ProxieStudios", textOnly: true },
+    { name: "Source Rock Ltd", textOnly: true },
+    { name: "EmpaVita Group", textOnly: true },
+    { name: "Valderus", textOnly: true },
     { name: "Trarza Consulting", textOnly: true },
-    { name: "LotusCare Services", src: "image_e2399e.png" },
-    { name: "Professional Home Care Advantage", src: "image_e2a714.png" }
+    { name: "LotusCare Services", textOnly: true },
+    { name: "Professional Home Care", textOnly: true }
   ];
 
   const courseData = {
