@@ -65,7 +65,7 @@ const App = () => {
     { name: "Valderus", textOnly: true },
     { name: "Trarza Consulting", textOnly: true },
     { name: "LotusCare Services", textOnly: true },
-    { name: "Professional Home Care", textOnly: true }
+    { name: "Professional Home Care Advantage", textOnly: true }
   ];
 
   const courseData = {
