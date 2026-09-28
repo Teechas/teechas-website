@@ -1229,16 +1229,15 @@ const App = () => {
 
                 <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 mt-auto">
                   <h4 className="font-bold text-gray-900 mb-4 text-sm">Apply for this role</h4>
-                  <form onSubmit={(e) => { e.preventDefault(); alert('Application Submitted!'); setActiveModal(null); }}>
-                    <div className="flex flex-col sm:flex-row items-center gap-4 bg-white px-4 py-3 border border-gray-200 rounded-lg cursor-pointer mb-4">
-                      <span className="text-sm text-gray-500 font-medium whitespace-nowrap">Upload Resume</span>
-                      <input type="file" required className="text-sm w-full" />
-                    </div>
-                    <button type="submit" className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded-lg transition-colors">
-                      Submit Application
-                    </button>
-                  </form>
+                  <p className="text-sm text-gray-600 mb-4">To apply, please email your resume and a brief cover letter directly to our hiring team.</p>
+                  <a 
+                    href={`mailto:careers@teechas.com?subject=Application: ${selectedJob.title}`}
+                    className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg"
+                  >
+                    Email Resume to Apply
+                  </a>
                 </div>
+
               </div>
             )}
 
