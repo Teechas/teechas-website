@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Menu, X, Calendar, ArrowRight, CheckCircle, PlayCircle, Youtube, Briefcase, Users, Clock, MapPin, BookOpen, CheckCircle2, Award, FileText, Plus, Minus, Video } from 'lucide-react';
 
-// The Dedicated Typeform Embed Component
 const BenchmarkPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    const script = document.createElement('script');
-    script.src = "//embed.typeform.com/next/embed.js";
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
-    };
   }, []);
 
   return (
     <div className="pt-[76px] h-screen w-full bg-white flex flex-col">
-      <div data-tf-live="01M3R6GA617JJNWV95SNTJVS51" className="w-full h-full flex-1"></div>
+      <iframe 
+        src="https://state-of-human-ai.typeform.com/to/XntdTHmU" 
+        className="w-full h-full flex-1 border-0"
+        title="The 2027 State of Human-AI Project Delivery Benchmark"
+      ></iframe>
     </div>
   );
 };
@@ -29,12 +22,19 @@ const App = () => {
   const [currentView, setCurrentView] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeModal, setActiveModal] = useState(null);
+  
+  // Content selection states
   const [selectedService, setSelectedService] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
   const [activeModalTab, setActiveModalTab] = useState('overview');
   const [enrollmentTrack, setEnrollmentTrack] = useState('');
   const [expandedTrack, setExpandedTrack] = useState(null);
+
+  // Success UI states
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState({ title: '', body: '' });
+  const [newsletterStatus, setNewsletterStatus] = useState('idle');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,8 +95,58 @@ const App = () => {
 
   const handleNewsletterSubmit = (e) => {
     e.preventDefault();
-    alert("Thank you for subscribing to Teechas Insights!");
+    setNewsletterStatus('success');
+    setTimeout(() => setNewsletterStatus('idle'), 4000);
     e.target.reset();
+  };
+
+  const handleFormSubmit = async (e, type) => {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn.innerText;
+    btn.innerText = "Processing...";
+
+    const formData = new FormData(form);
+    
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      
+      setActiveModal(null);
+      
+      if (type === 'enrollment') {
+        setSuccessMessage({
+          title: "Enrollment Request Received",
+          body: "Your seat reservation has been securely logged. Our admissions team will review your details and send your official corporate invoice to your email within 24 hours."
+        });
+      } else if (type === 'webinar') {
+        setSuccessMessage({
+          title: "Registration Confirmed",
+          body: "You are registered! A calendar invite containing your secure Zoom link will be sent to your inbox shortly."
+        });
+      } else {
+        setSuccessMessage({
+          title: "Inquiry Received",
+          body: "Thank you for reaching out to Teechas Consulting. A transformation specialist will be in touch with you shortly."
+        });
+      }
+      setShowSuccess(true);
+    } catch (error) {
+      btn.innerText = originalText;
+      alert("There was an issue submitting your form. Please email us directly at info@teechas.com");
+    }
+  };
+
+  const openLegalModal = (e) => {
+    e.preventDefault();
+    setSuccessMessage({
+      title: "Legal & Compliance",
+      body: "Our updated Privacy Policy and Terms of Service are currently undergoing standard legal review for our 2027 global compliance rollout. For immediate data inquiries, please email info@teechas.com."
+    });
+    setShowSuccess(true);
   };
 
   const services = [
@@ -436,6 +486,7 @@ const App = () => {
         <BenchmarkPage />
       ) : (
         <main className="flex-1">
+          {}
           <section id="home" className="relative pt-36 pb-20 lg:pt-52 lg:pb-32 overflow-hidden bg-black">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-900/40 via-black to-black"></div>
             <div className="absolute top-0 right-0 w-1/2 h-full bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2850&q=80')] bg-cover bg-center opacity-20 mask-image-linear-right"></div>
@@ -463,6 +514,7 @@ const App = () => {
             </div>
           </section>
 
+          {}
           <div className="bg-white border-b border-gray-100 py-10 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 text-center">
               <p className="text-sm font-semibold text-gray-400 tracking-widest uppercase">Trusted by organizations we've empowered</p>
@@ -485,6 +537,7 @@ const App = () => {
             </div>
           </div>
 
+          {}
           <section id="who-we-are" className="py-24 bg-gray-50 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -527,6 +580,7 @@ const App = () => {
             </div>
           </section>
 
+          {}
           <section className="py-16 bg-white border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center bg-black rounded-2xl p-8 lg:p-12 shadow-2xl">
@@ -560,6 +614,7 @@ const App = () => {
             </div>
           </section>
 
+          {}
           <section className="py-24 bg-gray-50 border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto mb-16">
@@ -571,16 +626,12 @@ const App = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                {/* Redesigned Presentation Matrix */}
                 <div className="relative p-8 md:p-12 bg-[#111827] rounded-3xl shadow-2xl overflow-hidden flex items-center justify-center min-h-[400px] border border-gray-800">
-                   {/* Background subtle glow */}
                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-800/50 via-[#111827] to-[#111827]"></div>
                    
-                   {/* Grid Dividers */}
                    <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gray-700/50 z-0"></div>
                    <div className="absolute top-0 left-1/2 w-[1px] h-full bg-gray-700/50 z-0"></div>
 
-                   {/* Central Glowing Diamond with Logo */}
                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex flex-col items-center justify-center z-20 shadow-[0_0_50px_rgba(249,115,22,0.4)] border-4 border-[#111827] rotate-45 group hover:scale-105 transition-transform duration-500">
                       <div className="-rotate-45 flex flex-col items-center">
                          <div className="bg-white rounded-md p-1.5 mb-1 shadow-sm flex items-center justify-center">
@@ -594,9 +645,7 @@ const App = () => {
                       </div>
                    </div>
 
-                   {/* Quadrants */}
                    <div className="grid grid-cols-2 gap-12 sm:gap-16 relative z-10 w-full max-w-lg">
-                      {/* Q1: Top Left */}
                       <div className="flex flex-col items-start pr-4 pb-4">
                          <div className="w-10 h-10 bg-orange-500/20 text-orange-400 rounded-lg flex items-center justify-center mb-3 border border-orange-500/30 shadow-inner">
                             <Briefcase size={20}/>
@@ -605,7 +654,6 @@ const App = () => {
                          <p className="text-gray-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Alignment & Vision</p>
                       </div>
                       
-                      {/* Q2: Top Right */}
                       <div className="flex flex-col items-start pl-4 pb-4">
                          <div className="w-10 h-10 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center mb-3 border border-blue-500/30 shadow-inner">
                             <FileText size={20}/>
@@ -614,7 +662,6 @@ const App = () => {
                          <p className="text-gray-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Project Management</p>
                       </div>
 
-                      {/* Q3: Bottom Left */}
                       <div className="flex flex-col items-start pr-4 pt-4">
                          <div className="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-lg flex items-center justify-center mb-3 border border-emerald-500/30 shadow-inner">
                             <Users size={20}/>
@@ -623,7 +670,6 @@ const App = () => {
                          <p className="text-gray-400 text-[10px] sm:text-xs font-bold uppercase tracking-widest">Change & Culture</p>
                       </div>
 
-                      {/* Q4: Bottom Right */}
                       <div className="flex flex-col items-start pl-4 pt-4">
                          <div className="w-10 h-10 bg-purple-500/20 text-purple-400 rounded-lg flex items-center justify-center mb-3 border border-purple-500/30 shadow-inner">
                             <Award size={20}/>
@@ -634,7 +680,6 @@ const App = () => {
                    </div>
                 </div>
 
-                {/* Diagnostic Solution Pitch */}
                 <div className="bg-white p-10 rounded-2xl border border-gray-200 shadow-lg">
                   <h4 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">The AI Readiness & Change Audit</h4>
                   <p className="text-gray-600 mb-6 leading-relaxed">
@@ -678,6 +723,7 @@ const App = () => {
             </div>
           </section>
 
+          {}
           <section id="services" className="py-24 bg-white border-t border-gray-200 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto mb-16">
@@ -719,7 +765,6 @@ const App = () => {
                 </div>
               </div>
 
-              {/* Fractional Banner */}
               <div id="fractional" className="bg-black rounded-2xl p-10 text-center text-white shadow-2xl relative overflow-hidden scroll-mt-24">
                 <div className="absolute -right-20 -top-20 w-64 h-64 bg-orange-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
                 <h4 className="text-2xl md:text-3xl font-bold mb-4 relative z-10">Looking for Embedded Leadership?</h4>
@@ -733,6 +778,7 @@ const App = () => {
             </div>
           </section>
 
+          {}
           <section className="py-24 bg-gray-50 border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto mb-16">
@@ -741,8 +787,6 @@ const App = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
-                
-                {/* Individual Track */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden h-full">
                   <div className="p-8">
                     <div className="flex items-center gap-3 mb-8">
@@ -752,7 +796,6 @@ const App = () => {
                       <h3 className="text-2xl font-bold text-gray-900">Individual Track</h3>
                     </div>
 
-                    {/* Job Readiness Section */}
                     <div className="mb-10">
                       <h4 className="text-lg font-bold text-gray-900 mb-2">Job Readiness Programs</h4>
                       <p className="text-sm text-gray-500 mb-4">Equips you with foundation skills, hands-on training, and habits to enter and grow in a role. (6 Weeks)</p>
@@ -769,7 +812,6 @@ const App = () => {
                       </button>
                     </div>
 
-                    {/* Certification Section */}
                     <div>
                       <h4 className="text-lg font-bold text-gray-900 mb-2">Certification Programs</h4>
                       <p className="text-sm text-gray-500 mb-4">Validates your expertise in a particular role or profession. Exam prep included. (4 Weeks / Weekends)</p>
@@ -788,7 +830,6 @@ const App = () => {
                   </div>
                 </div>
 
-                {/* Corporate Track */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden h-full">
                   <div className="p-8">
                     <div className="flex items-center gap-3 mb-8">
@@ -825,9 +866,9 @@ const App = () => {
                 </div>
               </div>
 
+              {}
               <div id="events" className="mt-10 scroll-mt-24">
                 
-                {/* Upcoming Webinar Masterclass Banner */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-8">
                     <div className="bg-orange-500 p-6 flex items-center gap-3">
                         <Video className="text-white" size={24}/>
@@ -850,7 +891,6 @@ const App = () => {
                     </div>
                 </div>
 
-                {/* Upcoming Training Schedule */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-8">
                   <div className="bg-black p-6 flex items-center gap-3">
                     <Calendar className="text-orange-500" size={24}/>
@@ -916,7 +956,6 @@ const App = () => {
                   </div>
                 </div>
 
-                {/* On-Demand Webinar Library */}
                 <div className="mt-12 bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
                     <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4 border-b border-gray-100 pb-4">
                         <div>
@@ -928,7 +967,6 @@ const App = () => {
                         </a>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {/* Video Card 1 */}
                         <a href="https://www.youtube.com/@TeechasHub" target="_blank" rel="noopener noreferrer" className="group rounded-xl overflow-hidden border border-gray-200 bg-gray-50 hover:shadow-lg transition-all flex flex-col sm:flex-row h-full">
                             <div className="w-full sm:w-2/5 aspect-video bg-[url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center relative shrink-0">
                                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
@@ -940,7 +978,6 @@ const App = () => {
                                 <p className="text-xs text-gray-500 font-medium">Recorded: August 2026</p>
                             </div>
                         </a>
-                        {/* Video Card 2 */}
                         <a href="https://www.youtube.com/@TeechasHub" target="_blank" rel="noopener noreferrer" className="group rounded-xl overflow-hidden border border-gray-200 bg-gray-50 hover:shadow-lg transition-all flex flex-col sm:flex-row h-full">
                             <div className="w-full sm:w-2/5 aspect-video bg-[url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')] bg-cover bg-center relative shrink-0">
                                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
@@ -954,11 +991,11 @@ const App = () => {
                         </a>
                     </div>
                 </div>
-
               </div>
             </div>
           </section>
 
+          {}
           <section id="insights" className="py-24 bg-white border-t border-gray-200 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
@@ -968,9 +1005,9 @@ const App = () => {
                   <p className="text-gray-600 mt-4">Every Friday, we break down the friction points between enterprise technology and human adoption.</p>
                 </div>
                 <div className="shrink-0">
-                   <button className="text-orange-500 font-bold hover:text-orange-600 flex items-center gap-2 transition-colors">
+                   <a href="https://www.linkedin.com/company/teechas/" target="_blank" rel="noopener noreferrer" className="text-orange-500 font-bold hover:text-orange-600 flex items-center gap-2 transition-colors">
                      View All Insights <ArrowRight size={20} />
-                   </button>
+                   </a>
                 </div>
               </div>
 
@@ -998,6 +1035,7 @@ const App = () => {
             </div>
           </section>
 
+          {}
           <section id="careers" className="py-24 bg-gray-50 border-t border-gray-200 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto mb-16">
@@ -1006,7 +1044,6 @@ const App = () => {
                 <p className="text-gray-600 text-lg">We are always looking for top-tier practitioners to join our global roster of expert facilitators and consultants.</p>
               </div>
 
-              {/* Facilitator Banner */}
               <div className="bg-orange-50 rounded-2xl p-8 lg:p-12 border border-orange-100 flex flex-col lg:flex-row items-center justify-between gap-8 mb-16">
                 <div className="max-w-2xl">
                   <h4 className="text-2xl font-bold text-gray-900 mb-3">Are you an industry expert?</h4>
@@ -1019,7 +1056,6 @@ const App = () => {
                 </button>
               </div>
 
-              {/* Open Positions Grid */}
               <h4 className="text-2xl font-bold text-gray-900 mb-8 border-b border-gray-200 pb-4">Open Positions</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 {jobPostings.map((job) => (
@@ -1047,7 +1083,7 @@ const App = () => {
         </main>
       )}
 
-      {/* Footer */}
+      {}
       <footer className="bg-black pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
@@ -1068,7 +1104,7 @@ const App = () => {
               <div className="flex gap-4">
                 <a href="https://www.linkedin.com/company/teechas/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-blue-600 hover:text-white transition-colors">in</a>
                 <a href="https://x.com/teechas1" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-gray-700 hover:text-white transition-colors">X</a>
-                <a href="https://www.instagram.com/teechas1?stkn=MWxuem8zY2YwOWI1cQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:text-white transition-colors">IG</a>
+                <a href="https://www.instagram.com/teechas1" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-pink-600 hover:text-white transition-colors">IG</a>
                 <a href="https://www.youtube.com/@TeechasHub" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center text-gray-400 hover:bg-red-600 hover:text-white transition-colors"><Youtube size={18}/></a>
               </div>
             </div>
@@ -1096,9 +1132,14 @@ const App = () => {
             <div>
               <h4 className="text-white font-bold mb-4">Newsletter</h4>
               <p className="text-xs text-gray-400 mb-4">Get our Friday Insights delivered directly to your inbox.</p>
-              <form onSubmit={handleNewsletterSubmit} className="flex">
-                <input type="email" placeholder="Email address" required className="bg-gray-900 text-white text-sm px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-1 focus:ring-orange-500" />
-                <button type="submit" className="bg-orange-500 text-white px-4 py-2 rounded-r-md text-sm font-bold hover:bg-orange-600 transition-colors">Join</button>
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-2">
+                <div className="flex">
+                    <input type="email" placeholder="Email address" required className="bg-gray-900 text-white text-sm px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-1 focus:ring-orange-500" />
+                    <button type="submit" className="bg-orange-500 text-white px-4 py-2 rounded-r-md text-sm font-bold hover:bg-orange-600 transition-colors">Join</button>
+                </div>
+                {newsletterStatus === 'success' && (
+                  <span className="text-green-500 text-xs font-medium flex items-center gap-1"><CheckCircle2 size={12}/> Success! You've been added.</span>
+                )}
               </form>
             </div>
           </div>
@@ -1106,25 +1147,43 @@ const App = () => {
           <div className="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
             <p>© {new Date().getFullYear()} Teechas LLC (North America) | Teechas Consulting Ltd (Nigeria). All rights reserved.</p>
             <div className="flex gap-4 mt-4 md:mt-0">
-              <span className="hover:text-white cursor-pointer">Privacy Policy</span>
-              <span className="hover:text-white cursor-pointer">Terms of Service</span>
+              <button onClick={openLegalModal} className="hover:text-white cursor-pointer">Privacy Policy</button>
+              <button onClick={openLegalModal} className="hover:text-white cursor-pointer">Terms of Service</button>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* Modals */}
-      {activeModal && (
+      {/* General Success/Alert Modal for Premium Routing */}
+      {showSuccess && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+           <div className="bg-white p-8 rounded-xl w-full max-w-md shadow-2xl relative text-center border-t-4 border-t-orange-500">
+              <div className="w-16 h-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                 <CheckCircle size={32} />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">{successMessage.title}</h3>
+              <p className="text-gray-600 mb-6 leading-relaxed text-sm">{successMessage.body}</p>
+              <button 
+                onClick={() => setShowSuccess(false)}
+                className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 rounded-lg transition-colors"
+              >
+                Return to Site
+              </button>
+           </div>
+        </div>
+      )}
+
+      {/* Content Modals */}
+      {activeModal && !showSuccess && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
           <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl relative my-8 max-h-[90vh] flex flex-col">
             <button 
               onClick={() => { setActiveModal(null); setSelectedCourse(null); setSelectedJob(null); setExpandedTrack(null); setEnrollmentTrack(''); }}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition-colors z-10"
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 transition-colors z-10 bg-gray-100 p-1 rounded-full"
             >
               <X size={24} />
             </button>
 
-            {/* Webinar Details & Registration Modal */}
             {activeModal === 'webinar-details' && (
               <div className="p-0 flex-1 overflow-y-auto custom-scrollbar flex flex-col md:flex-row">
                 <div className="bg-orange-50 p-8 md:p-10 md:w-5/12 border-b md:border-b-0 md:border-r border-orange-100 flex flex-col justify-center">
@@ -1150,13 +1209,9 @@ const App = () => {
                     <h4 className="text-lg font-bold text-gray-900 mb-2">Reserve Your Seat</h4>
                     <p className="text-xs text-gray-500 mb-6">Enter your details below to receive the calendar invite and secure Zoom link.</p>
                     
-                    <form className="space-y-4" action="https://api.web3forms.com/submit" method="POST" onSubmit={(e) => { 
-                        const btn = e.target.querySelector('button[type="submit"]');
-                        btn.innerText = "Processing...";
-                      }}>
+                    <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, 'webinar')}>
                       <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
                       <input type="hidden" name="subject" value="New Webinar Registration" />
-                      <input type="hidden" name="redirect" value="https://teechas.com" />
 
                       <div className="grid grid-cols-2 gap-4">
                         <input type="text" name="First Name" placeholder="First Name" required className="w-full px-4 py-2.5 rounded border border-gray-200 focus:outline-none focus:border-orange-500 text-sm" />
@@ -1174,7 +1229,6 @@ const App = () => {
               </div>
             )}
 
-            {/* Course Details Modal */}
             {activeModal === 'course-details' && selectedCourse && (
               <div className="p-8 md:p-10 flex-1 overflow-y-auto custom-scrollbar">
                 <div className="mb-6">
@@ -1270,13 +1324,12 @@ const App = () => {
                     else if (selectedCourse.id === 'cert-sap') setEnrollmentTrack('cert-sap');
                     setActiveModal('enrollment'); 
                   }} className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-lg transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20">
-                    Register & Proceed to Payment <ArrowRight size={18}/>
+                    Register & Proceed to Checkout <ArrowRight size={18}/>
                   </button>
                 </div>
               </div>
             )}
 
-            {/* Job Details Modal */}
             {activeModal === 'job-details' && selectedJob && (
               <div className="p-8 md:p-10 flex-1 overflow-y-auto custom-scrollbar">
                 <div className="mb-6">
@@ -1328,18 +1381,13 @@ const App = () => {
               </div>
             )}
 
-            {/* General Contact Form Modal */}
             {activeModal === 'contact' && (
               <div className="p-8 md:p-10 flex-1 overflow-y-auto custom-scrollbar">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Speak to an Advisor</h3>
                 <p className="text-gray-500 text-sm mb-6">Fill out the form below and a transformation specialist will be in touch shortly.</p>
-                <form className="space-y-4" action="https://api.web3forms.com/submit" method="POST" onSubmit={(e) => { 
-                  const btn = e.target.querySelector('button[type="submit"]');
-                  btn.innerText = "Sending...";
-                }}>
+                <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, 'contact')}>
                   <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
                   <input type="hidden" name="subject" value="New Website Lead: Teechas Consulting" />
-                  <input type="hidden" name="redirect" value="https://teechas.com" />
 
                   <div className="grid grid-cols-2 gap-4">
                     <input type="text" name="First Name" placeholder="First Name" required className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-sm" />
@@ -1373,22 +1421,18 @@ const App = () => {
               </div>
             )}
 
-            {/* Course Enrollment / Checkout Modal */}
             {activeModal === 'enrollment' && (
               <div className="p-8 md:p-10 flex-1 overflow-y-auto custom-scrollbar">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Secure Enrollment</h3>
-                <p className="text-gray-500 text-sm mb-6">Confirm your program details and billing region to proceed to the payment gateway.</p>
+                <p className="text-gray-500 text-sm mb-6">Select your track and billing region to reserve your seat in the cohort.</p>
                 
-                <form className="space-y-4" action="https://api.web3forms.com/submit" method="POST" onSubmit={(e) => { 
-                    const btn = e.target.querySelector('button[type="submit"]');
-                    btn.innerText = "Redirecting...";
-                  }}>
+                <form className="space-y-4" onSubmit={(e) => handleFormSubmit(e, 'enrollment')}>
                   <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
                   <input type="hidden" name="subject" value="New Course Enrollment Pending" />
                   <input type="hidden" name="Program Selected" value={selectedProgramData ? selectedProgramData.name : 'Unspecified Program'} />
                   
                   <div className="bg-orange-50 p-5 rounded-xl border border-orange-100 mb-6">
-                    <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Selected Program & Investment</label>
+                    <label className="block text-xs font-bold text-gray-700 uppercase mb-2">Selected Program</label>
                     <select 
                       name="Program Selected Dropdown"
                       value={enrollmentTrack} 
@@ -1396,7 +1440,7 @@ const App = () => {
                       className="w-full px-4 py-3 rounded-lg border border-orange-200 focus:outline-none focus:border-orange-500 text-sm bg-white font-bold text-gray-900 mb-3 shadow-sm"
                       required
                     >
-                      <option value="" disabled>Choose a specific program...</option>
+                      <option value="" disabled>Choose a program...</option>
                       <optgroup label="Job Readiness (6 Weeks)">
                         <option value="jr-ba">Business Analysis Foundations</option>
                         <option value="jr-pm">Project Management Foundations</option>
@@ -1421,8 +1465,8 @@ const App = () => {
                     </select>
 
                     {selectedProgramData && (
-                      <div className="flex justify-between items-center bg-white p-3 rounded border border-orange-100">
-                        <span className="text-sm text-gray-600 font-medium">Program Fee:</span>
+                      <div className="flex justify-between items-center bg-white p-3 rounded border border-orange-100 mt-2">
+                        <span className="text-sm text-gray-600 font-medium">Corporate Investment:</span>
                         <span className="text-lg font-bold text-gray-900">
                           {selectedProgramData.priceUSD} <span className="text-sm font-normal text-gray-500">| {selectedProgramData.priceNGN}</span>
                         </span>
@@ -1451,13 +1495,12 @@ const App = () => {
                   </div>
 
                   <button type="submit" className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3.5 rounded-lg transition-colors mt-6 flex justify-center items-center gap-2 shadow-lg">
-                    Proceed to Checkout <ArrowRight size={18} />
+                    Request Invoice & Reserve Seat <ArrowRight size={18} />
                   </button>
                 </form>
               </div>
             )}
 
-            {/* Become a Facilitator Form Modal */}
             {activeModal === 'facilitator' && (
               <div className="p-8 md:p-10 flex-1 overflow-y-auto custom-scrollbar">
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Join the Teechas Faculty</h3>
@@ -1476,7 +1519,6 @@ const App = () => {
               </div>
             )}
             
-            {/* Generic Service Details Modal */}
             {activeModal === 'service-details' && (
               <div className="p-8 md:p-10 flex-1 overflow-y-auto custom-scrollbar">
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">{selectedService}</h3>
