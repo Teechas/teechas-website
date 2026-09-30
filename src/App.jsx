@@ -404,7 +404,7 @@ const App = () => {
           <div className="bg-orange-500 text-white px-4 py-3 md:py-3.5 text-center text-sm md:text-base font-medium relative z-[60] shadow-md">
             Now Open: The 2027 State of Human-AI Project Delivery Benchmark. 
             <a href="#benchmark" onClick={() => setCurrentView('benchmark')} className="font-bold underline hover:text-black transition-colors ml-1 cursor-pointer">
-              Take the 3-Minute Diagnostic
+              Take the 4-Minute Diagnostic
             </a>
           </div>
         )}
