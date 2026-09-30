@@ -492,11 +492,11 @@ const App = () => {
             <div className="absolute top-0 right-0 w-1/2 h-full bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2850&q=80')] bg-cover bg-center opacity-20 mask-image-linear-right"></div>
             
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-              <div className="max-w-3xl">
+              <div className="max-w-4xl">
                 <div className="inline-block px-4 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 font-medium text-sm mb-6">
                   Transforming Enterprises Globally
                 </div>
-                <h1 className="text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight mb-8">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
                   Integrating Principles, Processes, Technology, and <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">People</span> to Drive True Transformation.
                 </h1>
                 <p className="text-lg lg:text-xl text-gray-300 leading-relaxed mb-10 max-w-2xl">
