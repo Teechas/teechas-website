@@ -120,7 +120,7 @@ const App = () => {
       if (type === 'enrollment') {
         setSuccessMessage({
           title: "Enrollment Request Received",
-          body: "Your seat reservation has been securely logged. Our admissions team will review your details and send your official corporate invoice to your email within 24 hours."
+          body: "Your seat reservation has been securely logged. Our admissions team will review your details and send your official invoice and secure payment link to your email within 24 hours."
         });
       } else if (type === 'webinar') {
         setSuccessMessage({
@@ -404,7 +404,7 @@ const App = () => {
           <div className="bg-orange-500 text-white px-4 py-3 md:py-3.5 text-center text-sm md:text-base font-medium relative z-[60] shadow-md">
             Now Open: The 2027 State of Human-AI Project Delivery Benchmark. 
             <a href="#benchmark" onClick={() => setCurrentView('benchmark')} className="font-bold underline hover:text-black transition-colors ml-1 cursor-pointer">
-              Take the 4-Minute Diagnostic
+              Take the 4-Minute Survey
             </a>
           </div>
         )}
@@ -486,7 +486,7 @@ const App = () => {
         <BenchmarkPage />
       ) : (
         <main className="flex-1">
-          {}
+          {/* Hero Section */}
           <section id="home" className="relative pt-36 pb-20 lg:pt-52 lg:pb-32 overflow-hidden bg-black">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-900/40 via-black to-black"></div>
             <div className="absolute top-0 right-0 w-1/2 h-full bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2850&q=80')] bg-cover bg-center opacity-20 mask-image-linear-right"></div>
@@ -514,7 +514,7 @@ const App = () => {
             </div>
           </section>
 
-          {}
+          {/* Client Logos Marquee */}
           <div className="bg-white border-b border-gray-100 py-10 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 text-center">
               <p className="text-sm font-semibold text-gray-400 tracking-widest uppercase">Trusted by organizations we've empowered</p>
@@ -537,7 +537,7 @@ const App = () => {
             </div>
           </div>
 
-          {}
+          {/* Who We Are */}
           <section id="who-we-are" className="py-24 bg-gray-50 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -580,7 +580,7 @@ const App = () => {
             </div>
           </section>
 
-          {}
+          {/* Video / YouTube Section */}
           <section className="py-16 bg-white border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center bg-black rounded-2xl p-8 lg:p-12 shadow-2xl">
@@ -614,7 +614,7 @@ const App = () => {
             </div>
           </section>
 
-          {}
+          {/* Adaptive Hub Methodology */}
           <section className="py-24 bg-gray-50 border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto mb-16">
@@ -723,7 +723,7 @@ const App = () => {
             </div>
           </section>
 
-          {}
+          {/* Services Section */}
           <section id="services" className="py-24 bg-white border-t border-gray-200 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto mb-16">
@@ -778,7 +778,7 @@ const App = () => {
             </div>
           </section>
 
-          {}
+          {/* Academy Section */}
           <section className="py-24 bg-gray-50 border-t border-gray-200">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto mb-16">
@@ -787,6 +787,7 @@ const App = () => {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
+                {/* Individual Track */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden h-full">
                   <div className="p-8">
                     <div className="flex items-center gap-3 mb-8">
@@ -830,6 +831,7 @@ const App = () => {
                   </div>
                 </div>
 
+                {/* Corporate Track */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden h-full">
                   <div className="p-8">
                     <div className="flex items-center gap-3 mb-8">
@@ -866,31 +868,34 @@ const App = () => {
                 </div>
               </div>
 
-              {}
+              {/* Events & Schedules */}
               <div id="events" className="mt-10 scroll-mt-24">
                 
+                {/* Upcoming Webinars */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-8">
                     <div className="bg-orange-500 p-6 flex items-center gap-3">
                         <Video className="text-white" size={24}/>
                         <h3 className="text-xl font-bold text-white">Upcoming Webinars</h3>
                     </div>
                     <div className="p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-                        <div className="absolute -right-20 -top-20 w-64 h-64 bg-orange-50 rounded-full mix-blend-multiply opacity-50 z-0"></div>
+                        <div className="absolute -right-20 -top-20 w-64 h-64 bg-gray-100 rounded-full mix-blend-multiply opacity-50 z-0"></div>
                         <div className="relative z-10 max-w-3xl">
-                            <span className="bg-red-100 text-red-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">Free Masterclass</span>
-                            <h4 className="font-bold text-gray-900 text-xl md:text-2xl mb-2">Mastering Enterprise AI Adoption: The Human Element</h4>
-                            <p className="text-gray-600 text-sm md:text-base mb-5 leading-relaxed">Join our lead transformation strategists as we unpack why most AI implementations fail at the adoption layer, and how to build an Adaptive Hub for your enterprise.</p>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 font-medium border-t border-gray-100 pt-4">
-                              <span className="flex items-center gap-1.5"><Clock size={16} className="text-orange-500"/> Oct 15, 2026 | 11:00 AM EST</span>
-                              <span className="flex items-center gap-1.5 bg-gray-100 px-3 py-1 rounded-full"><MapPin size={14}/> Zoom Live</span>
+                            <span className="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">Past Event - Recording Available</span>
+                            <h4 className="font-bold text-gray-500 text-xl md:text-2xl mb-2">Mastering Enterprise AI Adoption: The Human Element</h4>
+                            <p className="text-gray-500 text-sm md:text-base mb-5 leading-relaxed">Join our lead transformation strategists as we unpack why most AI implementations fail at the adoption layer, and how to build an Adaptive Hub for your enterprise.</p>
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 font-medium border-t border-gray-100 pt-4">
+                              <span className="flex items-center gap-1.5"><Clock size={16} /> Oct 15, 2026 | 11:00 AM EST</span>
                             </div>
                         </div>
                         <div className="shrink-0 flex flex-col gap-3 relative z-10 w-full md:w-auto">
-                            <button onClick={() => setActiveModal('webinar-details')} className="bg-black text-white hover:bg-gray-800 px-8 py-3.5 rounded-lg font-bold transition-colors w-full text-center shadow-lg whitespace-nowrap">Reserve Your Seat</button>
+                            <a href="https://www.youtube.com/@TeechasHub" target="_blank" rel="noopener noreferrer" className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-8 py-3.5 rounded-lg font-bold transition-colors w-full text-center whitespace-nowrap flex items-center justify-center gap-2">
+                              <Youtube size={18}/> Watch Replay
+                            </a>
                         </div>
                     </div>
                 </div>
 
+                {/* Training Schedule */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-8">
                   <div className="bg-black p-6 flex items-center gap-3">
                     <Calendar className="text-orange-500" size={24}/>
@@ -902,13 +907,13 @@ const App = () => {
                       <div>
                         <h4 className="font-bold text-gray-900 text-lg mb-2">CBAP Certification Prep</h4>
                         <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 font-medium">
-                          <span className="flex items-center gap-1.5"><Clock size={16} className="text-orange-500"/> Oct 17 - Nov 07, 2026</span>
+                          <span className="flex items-center gap-1.5"><Clock size={16} className="text-gray-400"/> Oct 17 - Nov 07, 2026</span>
                           <span className="flex items-center gap-1.5 bg-gray-100 px-3 py-1 rounded-full"><MapPin size={14}/> Virtual Live</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-6">
-                        <span className="text-green-600 bg-green-50 px-3 py-1 rounded-full text-xs font-bold shrink-0">Open</span>
-                        <button onClick={() => { setEnrollmentTrack('cert-cbap'); setActiveModal('enrollment'); }} className="bg-black text-white hover:bg-gray-800 px-6 py-2 rounded-lg font-bold transition-colors">Enroll</button>
+                        <span className="text-red-600 bg-red-50 px-3 py-1 rounded-full text-xs font-bold shrink-0">Registration Closed</span>
+                        <button onClick={() => { setActiveModal('contact'); }} className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-6 py-2 rounded-lg font-bold transition-colors whitespace-nowrap">Join Waitlist</button>
                       </div>
                     </div>
 
@@ -995,7 +1000,7 @@ const App = () => {
             </div>
           </section>
 
-          {}
+          {/* Insights Section */}
           <section id="insights" className="py-24 bg-white border-t border-gray-200 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
@@ -1035,7 +1040,7 @@ const App = () => {
             </div>
           </section>
 
-          {}
+          {/* Careers Section */}
           <section id="careers" className="py-24 bg-gray-50 border-t border-gray-200 scroll-mt-24">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center max-w-3xl mx-auto mb-16">
@@ -1083,7 +1088,7 @@ const App = () => {
         </main>
       )}
 
-      {}
+      {/* Footer */}
       <footer className="bg-black pt-20 pb-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
